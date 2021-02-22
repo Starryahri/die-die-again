@@ -11,12 +11,15 @@ public class PlayerController : MonoBehaviour
     public float peakHeight = 1f;
     public float xDistance = 1f;
     public float customGravity;
+    public float gravityMultiplier = 1.5f;
+    public float jumpTimeCounter;
+    public float jumpTime;
 
-    public bool _isJump = false;
+    private bool _isJumping;
+    public bool _canDoubleJump = false;
     public bool _isGrounded = false;
 
-    public float gravityMultiplier = 1.5f;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -36,41 +39,60 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        
         if(transform.position.y < -8f)
         {
             transform.position = new Vector3(0, 1, 0);
         }
+        //horizontal movement
+        rb.velocity = new Vector3(Input.GetAxisRaw("Horizontal") * xVelocity, rb.velocity.y, 0);
 
         customGravity = (-2 * peakHeight * yVelocity * yVelocity)/(xDistance * xDistance);
-        if(_isGrounded == true)
+        
+        if(_isGrounded == true && Input.GetKeyDown(KeyCode.Space))
         {
             //actions here... like jumping
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                rb.velocity = Vector3.up * yVelocity;
-                _isGrounded = false;
-            }
-
+            rb.velocity = new Vector3(rb.velocity.x, yVelocity, 0);
+            _isGrounded = false;
+            _isJumping = true;
+            jumpTimeCounter = jumpTime;
         }
 
+        //once player reaches peak of jump
         if (rb.velocity.y <= 0)
         {
+            //heavier gravity
             rb.velocity += Vector3.up * customGravity * gravityMultiplier * Time.deltaTime;
         }
-        else if (rb.velocity.y > 0)
+        if (rb.velocity.y > 0)
         {
             rb.velocity += Vector3.up * customGravity * Time.deltaTime;
         }
 
+        //hold for higher jump
+        if(Input.GetKey(KeyCode.Space) && _isJumping == true)
+        {
+            if(jumpTimeCounter > 0)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, yVelocity, 0);
+                jumpTimeCounter -= Time.deltaTime;
 
+            }
+            else
+            {
+                _isJumping = false;
+            }
+        }
 
-        //horizontal movement
-        rb.velocity = new Vector3(Input.GetAxisRaw("Horizontal") * xVelocity, rb.velocity.y, 0);
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+            _isJumping = false;
+        }
+        
     }
 
     void OnCollisionEnter(Collision other)
     {
-        
         if(other.gameObject.name == "Platform" || other.gameObject.name == "Platform (1)")
         {
             _isGrounded = true;
@@ -84,28 +106,4 @@ public class PlayerController : MonoBehaviour
             _isGrounded = false;
         }
     }
-    // Update is called once per frame
-    /*void Update()
-    {
-        if (_isJump == false)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _isJump = true;
-                rb.velocity = Vector3.up * yVelocity;
-
-            }
-                   
-        }
-
-
-//if not jumping
-//then press space bar and set jumping to true;
-
-
-
-        //move horizontally
-        
-    }
-*/
 }

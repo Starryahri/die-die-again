@@ -255,9 +255,11 @@ MonoBehaviour:
   peakHeight: 9.3
   xDistance: 10.19
   customGravity: -16.268608
-  _isJump: 0
-  _isGrounded: 0
   gravityMultiplier: 1.5
+  jumpTimeCounter: 0
+  jumpTime: 0.35
+  _canDoubleJump: 0
+  _isGrounded: 0
 --- !u!1 &613152478
 GameObject:
   m_ObjectHideFlags: 0
