@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Recorder;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -39,19 +40,23 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        
+        TestRaycast();
+
+        //respawn if off the map
         if(transform.position.y < -8f)
         {
             transform.position = new Vector3(0, 1, 0);
         }
+
         //horizontal movement
         rb.velocity = new Vector3(Input.GetAxisRaw("Horizontal") * xVelocity, rb.velocity.y, 0);
 
+        //rolled my own gravity feel
         customGravity = (-2 * peakHeight * yVelocity * yVelocity)/(xDistance * xDistance);
         
+        //Here is the jump action
         if(_isGrounded == true && Input.GetKeyDown(KeyCode.Space))
         {
-            //actions here... like jumping
             rb.velocity = new Vector3(rb.velocity.x, yVelocity, 0);
             _isGrounded = false;
             _isJumping = true;
@@ -91,9 +96,15 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    private void TestRaycast()
+    {
+        Debug.DrawRay(rb.position, Vector3.down, Color.blue, 3f);
+        Debug.DrawRay(rb.position, Vector3.left, Color.green, 1f);
+    }
+
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.name == "Platform" || other.gameObject.name == "Platform (1)")
+        if(other.gameObject.CompareTag("Ground"))
         {
             _isGrounded = true;
         }
@@ -101,7 +112,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollsionExit(Collision other)
     {
-        if(other.gameObject.name == "Platform" || other.gameObject.name == "Platform (1)")
+        if(other.gameObject.CompareTag("Ground"))
         {
             _isGrounded = false;
         }
