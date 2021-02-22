@@ -249,11 +249,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00d6cf8a665e4ae69bc76786e1fd93c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yVelocity: 8.71
-  xVelocity: 2.81
-  peakHeight: 6.34
-  xDistance: 6.7
-  customGravity: -21.429201
+  yVelocity: 9.53
+  xVelocity: 7.6
+  peakHeight: 9.3
+  xDistance: 10.19
+  customGravity: -16.268608
   _isJump: 0
   _isGrounded: 0
   gravityMultiplier: 1.5
