@@ -6,7 +6,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    Rigidbody rb;
+    private Rigidbody rb;
+    public Transform groundCheck;
+    public float checkRadius;
+    public LayerMask whatIsGround;
+
     public float yVelocity = 1f;
     public float xVelocity = 1f;
     public float peakHeight = 1f;
@@ -16,13 +20,10 @@ public class PlayerController : MonoBehaviour
     public float jumpTimeCounter;
     public float jumpTime;
 
+    public bool _isGrounded;
     private bool _isJumping;
     public bool _canDoubleJump = false;
-    public bool _isGrounded = false;
     public bool _isTouchingFront = false;
-    public Transform frontCheck;
-    bool wallSliding;
-    public float wallSlidingSpeed = 10f;
     
     // Start is called before the first frame update
     void Start()
@@ -38,14 +39,23 @@ public class PlayerController : MonoBehaviour
         //h = peak height
         //vx = velocity in x direction
         //xh = x distance to get to peak h
-        
+
+
+        //Todo Clean up the code and break up into functions
+        //Todo Change some variables from public to private(serialize some)
+        //Todo Wall Slide
+        //Todo Wall Jump
+        //Todo Time Reverse and Stop/Pausing, slow down
+        //Todo Start Research on pausing
     }
 
     void Update()
     {
-
-        Debug.Log(rb.velocity);
-
+        ///AAAAHHH 3D equivlant is CheckSphere not OverlapCircle!!!!! WTF....
+        _isGrounded = Physics.CheckSphere(groundCheck.position, checkRadius, whatIsGround);
+        //Nice thing though the refactoring actually fit really nicely into my program
+        //Seems this is the easiest way to go about platforming...
+       
         //respawn if off the map
         if(transform.position.y < -8f)
         {
@@ -53,9 +63,11 @@ public class PlayerController : MonoBehaviour
         }
 
         //horizontal movement
-        rb.velocity = new Vector3(Input.GetAxisRaw("Horizontal") * xVelocity, rb.velocity.y, 0);
+        float moveInput = Input.GetAxis("Horizontal");
+        rb.velocity = new Vector3(moveInput * xVelocity, rb.velocity.y, 0);
 
-        //rolled my own gravity feel
+        //rolled my own gravity feel, super customizable though!
+        //This gravity is calculated based off position, not time;
         customGravity = (-2 * peakHeight * yVelocity * yVelocity)/(xDistance * xDistance);
         
         //Here is the jump action
