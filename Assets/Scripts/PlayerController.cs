@@ -6,73 +6,99 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //Script references
     private Rigidbody rb;
     public Transform groundCheck;
+
+    //For ground collisions
     public float checkRadius;
-    public LayerMask whatIsGround;
+    public LayerMask whatIsGround;              //Make sure this is set in your layers!
 
-    public float yVelocity = 1f;
-    public float xVelocity = 1f;
-    public float peakHeight = 1f;
-    public float xDistance = 1f;
-    public float customGravity;
-    public float gravityMultiplier = 1.5f;
-    public float jumpTimeCounter;
+    //Adjust these values for specific gravity
+    public float yVelocity = 1f;                //Vertical move speed, jump force
+    public float xVelocity = 1f;                //Horizontal move speed
+    public float peakHeight = 1f;               //Peak height of jump
+    public float xDistance = 1f;                //Total distance for complete arc
+    public float customGravity;                 //Gravity based on above values
+    public float gravityMultiplier = 1.5f;      //Used to fine tune gravity after peak
+
+    //Timer for hold for higher jump              
     public float jumpTime;
+    public float jumpTimeCounter;
 
-    public bool _isGrounded;
-    private bool _isJumping;
-    public bool _canDoubleJump = false;
-    public bool _isTouchingFront = false;
+    //Hang time
+    public float hangTime = 0.2f;
+    private float _hangCounter;
+
+    //Other checks
+    [SerializeField]
+    private bool _isGrounded;
+    [SerializeField]
+    private bool _isJumping; 
     
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        //g or acc = (-2 * h * vx^2)/(xh)^2
-        //v0 = (2 * h * vx)/xh
-        
-        //pos += (vel * dt) + (.5acc * dt * dt)
-        //vel += acc * dt
-
-        //v0 = initial velocity in y direction
-        //h = peak height
-        //vx = velocity in x direction
-        //xh = x distance to get to peak h
-
-
-        //Todo Clean up the code and break up into functions
-        //Todo Change some variables from public to private(serialize some)
+        //note I might start start caching some variables, less memory intensive I think?
         //Todo Wall Slide
         //Todo Wall Jump
         //Todo Time Reverse and Stop/Pausing, slow down
         //Todo Start Research on pausing
-        //todo add coyote/hang time
     }
 
     void Update()
     {
-        ///AAAAHHH 3D equivlant is CheckSphere not OverlapCircle!!!!! WTF....
+        //Check if player is grounded, if they are able to jump, refer to MovementControls()
         _isGrounded = Physics.CheckSphere(groundCheck.position, checkRadius, whatIsGround);
-        //Nice thing though the refactoring actually fit really nicely into my program
-        //Seems this is the easiest way to go about platforming...
-       
-        //respawn if off the map
-        if(transform.position.y < -8f)
+
+        //rolled my own gravity feel, super customizable though!
+        //This gravity is calculated based off position, not time;
+        customGravity = (-2 * peakHeight * yVelocity * yVelocity) / (xDistance * xDistance);
+
+        //respawn if off the map (DEBUG ONLY)
+        if (transform.position.y < -8f)
         {
             transform.position = new Vector3(0, 1, 0);
         }
 
-        //horizontal movement
+        MovementControls();
+    }
+
+    private void MovementControls()
+    {
+        //Horiztonal movement
         float moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector3(moveInput * xVelocity, rb.velocity.y, 0);
 
-        //rolled my own gravity feel, super customizable though!
-        //This gravity is calculated based off position, not time;
-        customGravity = (-2 * peakHeight * yVelocity * yVelocity)/(xDistance * xDistance);
+        if (_isGrounded)
+        {
+            _hangCounter = hangTime;
+        }
+        else
+        {
+            _hangCounter -= Time.deltaTime;
+        }
+        //Jump movement
+        Jump();
         
-        //Here is the jump action
-        if(_isGrounded == true && Input.GetKeyDown(KeyCode.Space))
+        //Once player reaches peak of jump
+        if (rb.velocity.y <= 0)
+        {
+            //heavier gravity for juice
+            float fallGravity = customGravity * gravityMultiplier;
+            rb.velocity += Vector3.up * fallGravity * Time.deltaTime;
+        }
+        //If player releases anytime before peak
+        if (rb.velocity.y > 0)
+        {
+            rb.velocity += Vector3.up * customGravity * Time.deltaTime;
+        }
+    }
+
+    private void Jump()
+    {
+        //Jump movement
+        if (Input.GetKeyDown(KeyCode.Space) && _hangCounter > 0f)
         {
             rb.velocity = new Vector3(rb.velocity.x, yVelocity, 0);
             _isGrounded = false;
@@ -80,21 +106,9 @@ public class PlayerController : MonoBehaviour
             jumpTimeCounter = jumpTime;
         }
 
-        //once player reaches peak of jump
-        if (rb.velocity.y <= 0)
+        if (Input.GetKey(KeyCode.Space) && _isJumping == true)
         {
-            //heavier gravity
-            rb.velocity += Vector3.up * customGravity * gravityMultiplier * Time.deltaTime;
-        }
-        if (rb.velocity.y > 0)
-        {
-            rb.velocity += Vector3.up * customGravity * Time.deltaTime;
-        }
-
-        //hold for higher jump
-        if(Input.GetKey(KeyCode.Space) && _isJumping == true)
-        {
-            if(jumpTimeCounter > 0)
+            if (jumpTimeCounter > 0)
             {
                 rb.velocity = new Vector3(rb.velocity.x, yVelocity, 0);
                 jumpTimeCounter -= Time.deltaTime;
@@ -105,11 +119,10 @@ public class PlayerController : MonoBehaviour
                 _isJumping = false;
             }
         }
-        
-        if(Input.GetKeyUp(KeyCode.Space))
+
+        if (Input.GetKeyUp(KeyCode.Space))
         {
             _isJumping = false;
         }
-        
     }
 }
