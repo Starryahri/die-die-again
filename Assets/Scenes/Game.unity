@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 441669902}
-  checkRadius: 0
+  checkRadius: 0.5
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
@@ -262,11 +262,11 @@ MonoBehaviour:
   xDistance: 10.19
   customGravity: -16.268608
   gravityMultiplier: 1.5
-  jumpTimeCounter: 0
   jumpTime: 0.35
+  jumpTimeCounter: 0
+  hangTime: 0.2
   _isGrounded: 0
-  _canDoubleJump: 0
-  _isTouchingFront: 0
+  _isJumping: 0
 --- !u!1 &441669901
 GameObject:
   m_ObjectHideFlags: 0
