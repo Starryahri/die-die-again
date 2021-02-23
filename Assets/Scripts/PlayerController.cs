@@ -19,7 +19,10 @@ public class PlayerController : MonoBehaviour
     private bool _isJumping;
     public bool _canDoubleJump = false;
     public bool _isGrounded = false;
-
+    public bool _isTouchingFront = false;
+    public Transform frontCheck;
+    bool wallSliding;
+    public float wallSlidingSpeed = 10f;
     
     // Start is called before the first frame update
     void Start()
@@ -40,7 +43,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        TestRaycast();
+
+        Debug.Log(rb.velocity);
 
         //respawn if off the map
         if(transform.position.y < -8f)
@@ -88,33 +92,11 @@ public class PlayerController : MonoBehaviour
                 _isJumping = false;
             }
         }
-
+        
         if(Input.GetKeyUp(KeyCode.Space))
         {
             _isJumping = false;
         }
         
-    }
-
-    private void TestRaycast()
-    {
-        Debug.DrawRay(rb.position, Vector3.down, Color.blue, 3f);
-        Debug.DrawRay(rb.position, Vector3.left, Color.green, 1f);
-    }
-
-    void OnCollisionEnter(Collision other)
-    {
-        if(other.gameObject.CompareTag("Ground"))
-        {
-            _isGrounded = true;
-        }
-    }
-
-    void OnCollsionExit(Collision other)
-    {
-        if(other.gameObject.CompareTag("Ground"))
-        {
-            _isGrounded = false;
-        }
     }
 }
