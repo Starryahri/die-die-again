@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
         //Todo Wall Jump
         //Todo Time Reverse and Stop/Pausing, slow down
         //Todo Start Research on pausing
+        //todo add coyote/hang time
     }
 
     void Update()
