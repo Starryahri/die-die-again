@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     //For ground collisions
     public float checkRadius;
     public LayerMask whatIsGround;              //Make sure this is set in your layers!
+    public LayerMask whatIsClimb;
 
     //Adjust these values for specific gravity
     public float yVelocity = 1f;                //Vertical move speed, jump force
@@ -37,18 +38,31 @@ public class PlayerController : MonoBehaviour
 
     private bool facingRight = false;
 
+
     public bool _isTouchingFront;
     public Transform frontCheck;
     public bool wallSliding;
     public float wallSlidingSpeed;
+    public bool wallJumping;
+    public float xWallForce;
+    public float yWallForce;
+    public float wallJumpTime;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         //note I might start start caching some variables, less memory intensive I think?
-        //Todo Wall Jump
         //Todo Time Reverse and Stop/Pausing, slow down
         //Todo Start Research on pausing
+        //Todo rework our core mechanic of time manipulation, still recording actions, but
+        //what if we had unlimited lives and we just had to fail in order to succed, so a previous
+        //after you died completing a task you your
+        //might be slightly easier than time recording
+        //todo create a new scene with reworked game idea.
+        //todo 1. create a prefab of player
+        //todo 2. create spikes that will kill instance of player and respawn new instance at start
+        //todo 3. create button to trigger a drawbridge
+        //todo 4. create enemy that kills player in hit
     }
 
     void Update()
@@ -98,7 +112,7 @@ public class PlayerController : MonoBehaviour
         //Jump movement
         Jump();
 
-        _isTouchingFront = Physics.CheckSphere(frontCheck.position, checkRadius, whatIsGround);
+        _isTouchingFront = Physics.CheckSphere(frontCheck.position, checkRadius, whatIsClimb);
 
         if (_isTouchingFront == true && _isGrounded == false && moveInput != 0)
         {
@@ -114,6 +128,12 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
         }
 
+        if(Input.GetKeyDown(KeyCode.Space) && wallSliding == true)
+        {
+            wallJumping = true;
+            Invoke(nameof(SetWallJumpingToFalse), wallJumpTime);
+        }
+
 
         //Once player reaches peak of jump
         if (rb.velocity.y <= 0)
@@ -126,6 +146,12 @@ public class PlayerController : MonoBehaviour
         if (rb.velocity.y > 0)
         {
             rb.velocity += Vector3.up * customGravity * Time.deltaTime;
+        }
+
+
+        if (wallJumping == true)
+        {
+            rb.velocity = new Vector3(xWallForce * -moveInput, yWallForce, 0);
         }
     }
 
@@ -158,6 +184,7 @@ public class PlayerController : MonoBehaviour
         {
             _isJumping = false;
         }
+
     }
 
     void Flip()
@@ -166,5 +193,10 @@ public class PlayerController : MonoBehaviour
         Vector3 scaler = transform.localScale;
         scaler.x *= -1;
         transform.localScale = scaler;
+    }
+
+    void SetWallJumpingToFalse()
+    {
+        wallJumping = false;
     }
 }

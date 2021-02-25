@@ -257,6 +257,9 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
+  whatIsClimb:
+    serializedVersion: 2
+    m_Bits: 128
   yVelocity: 20.5
   xVelocity: 11.7
   peakHeight: 11.97
@@ -271,6 +274,10 @@ MonoBehaviour:
   frontCheck: {fileID: 550354444}
   wallSliding: 0
   wallSlidingSpeed: 5
+  wallJumping: 0
+  xWallForce: 15
+  yWallForce: 30
+  wallJumpTime: 0.05
 --- !u!1 &441669901
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,7 +350,7 @@ GameObject:
   - component: {fileID: 609203439}
   - component: {fileID: 609203438}
   - component: {fileID: 609203437}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Platform (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -581,7 +588,7 @@ GameObject:
   - component: {fileID: 1153942674}
   - component: {fileID: 1153942673}
   - component: {fileID: 1153942672}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Platform (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
