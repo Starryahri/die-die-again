@@ -33,14 +33,19 @@ public class PlayerController : MonoBehaviour
     //Other checks
     [SerializeField]
     private bool _isGrounded;
-    [SerializeField]
-    private bool _isJumping; 
-    
+    private bool _isJumping;
+
+    private bool facingRight = false;
+
+    public bool _isTouchingFront;
+    public Transform frontCheck;
+    public bool wallSliding;
+    public float wallSlidingSpeed;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         //note I might start start caching some variables, less memory intensive I think?
-        //Todo Wall Slide
         //Todo Wall Jump
         //Todo Time Reverse and Stop/Pausing, slow down
         //Todo Start Research on pausing
@@ -62,6 +67,8 @@ public class PlayerController : MonoBehaviour
         }
 
         MovementControls();
+
+
     }
 
     private void MovementControls()
@@ -69,6 +76,16 @@ public class PlayerController : MonoBehaviour
         //Horiztonal movement
         float moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector3(moveInput * xVelocity, rb.velocity.y, 0);
+        Debug.Log(moveInput);
+
+        if (moveInput < 0 && facingRight == false)
+        {
+            Flip();
+        }
+        else if (moveInput > 0 && facingRight == true)
+        {
+            Flip();
+        }
 
         if (_isGrounded)
         {
@@ -80,7 +97,24 @@ public class PlayerController : MonoBehaviour
         }
         //Jump movement
         Jump();
-        
+
+        _isTouchingFront = Physics.CheckSphere(frontCheck.position, checkRadius, whatIsGround);
+
+        if (_isTouchingFront == true && _isGrounded == false && moveInput != 0)
+        {
+            wallSliding = true;
+        }
+        else
+        {
+            wallSliding = false;
+        }
+
+        if (wallSliding)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
+        }
+
+
         //Once player reaches peak of jump
         if (rb.velocity.y <= 0)
         {
@@ -124,5 +158,13 @@ public class PlayerController : MonoBehaviour
         {
             _isJumping = false;
         }
+    }
+
+    void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 scaler = transform.localScale;
+        scaler.x *= -1;
+        transform.localScale = scaler;
     }
 }
