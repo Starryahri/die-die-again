@@ -6,11 +6,13 @@ TagManager:
   tags:
   - Ground
   - Climbable
+  - Dead
+  - Spikes
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Glow
   - Water
   - UI
   - Ground

@@ -9,6 +9,11 @@ public class PlayerController : MonoBehaviour
     //Script references
     private Rigidbody rb;
     public Transform groundCheck;
+    public GameObject playerObj;
+    public GameObject blood;
+
+    CharacterController controller;
+    Animator anim;
 
     //For ground collisions
     public float checkRadius;
@@ -37,6 +42,7 @@ public class PlayerController : MonoBehaviour
     private bool _isJumping;
 
     private bool facingRight = false;
+    public bool isPlayerDead = false;
 
 
     public bool _isTouchingFront;
@@ -47,10 +53,12 @@ public class PlayerController : MonoBehaviour
     public float xWallForce;
     public float yWallForce;
     public float wallJumpTime;
-
+    
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
         //note I might start start caching some variables, less memory intensive I think?
         //Todo Time Reverse and Stop/Pausing, slow down
         //Todo Start Research on pausing
@@ -90,20 +98,30 @@ public class PlayerController : MonoBehaviour
         //Horiztonal movement
         float moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector3(moveInput * xVelocity, rb.velocity.y, 0);
-        Debug.Log(moveInput);
+        //Debug.Log(moveInput);
 
-        if (moveInput < 0 && facingRight == false)
+        if (moveInput < 0)
         {
-            Flip();
+            transform.eulerAngles = new Vector3(0, 180, 0); // flipped
+            //Flip();
+            anim.SetInteger("condition", 1);
         }
-        else if (moveInput > 0 && facingRight == true)
+        else if (moveInput > 0)
         {
-            Flip();
+            transform.eulerAngles = new Vector3(0, 0, 0); // normal
+                                                          //Flip();
+            anim.SetInteger("condition", 1);
+        }
+
+        if (moveInput == 0)
+        {
+            anim.SetInteger("condition", 0);
         }
 
         if (_isGrounded)
         {
             _hangCounter = hangTime;
+            anim.SetInteger("jump", 0);
         }
         else
         {
@@ -161,6 +179,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && _hangCounter > 0f)
         {
             rb.velocity = new Vector3(rb.velocity.x, yVelocity, 0);
+            anim.SetInteger("jump", 1);
             _isGrounded = false;
             _isJumping = true;
             jumpTimeCounter = jumpTime;
@@ -195,8 +214,26 @@ public class PlayerController : MonoBehaviour
         transform.localScale = scaler;
     }
 
+
     void SetWallJumpingToFalse()
     {
         wallJumping = false;
+    }
+
+    void PlayerRespawn()
+    {
+        if(isPlayerDead == true)
+        {
+            Instantiate(playerObj, new Vector3(16f, 2.5f, 0), Quaternion.identity);
+            isPlayerDead = false;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Spikes"))
+        {
+            Instantiate(blood, transform.position, Quaternion.identity);
+        }
     }
 }
