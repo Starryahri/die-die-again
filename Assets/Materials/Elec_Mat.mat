@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Electricity
+  m_Name: Elec_Mat
   m_Shader: {fileID: -6465566751694194690, guid: 2a18f102ab40b17498ddbb3a646f3211, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
