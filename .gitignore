@@ -78,7 +78,7 @@ crashlytics-build.properties
 *.jar
 *.rar
 *.tar
-*.zip
+
 
 # Logs and databases #
 ######################
