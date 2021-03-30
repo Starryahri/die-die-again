@@ -18,7 +18,7 @@ public class Spikes : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Player"))
         {

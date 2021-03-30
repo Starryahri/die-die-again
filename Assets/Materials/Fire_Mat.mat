@@ -38,7 +38,7 @@ Material:
     m_Floats:
     - Vector1_33badd742ffe4d2186045f3c121c90a0: 4
     - Vector1_4c344ac0a89c4c1aa53664ce07c877db: 1.5
-    - Vector1_80e66dfc261a4137a358f1439e184e1e: -0.08
+    - Vector1_80e66dfc261a4137a358f1439e184e1e: 0.55
     - Vector1_f87e6d67f8ec4b868f06243f50e7aef4: 7.5
     m_Colors:
     - Color_7f4af57d9a824d1db0304c12438b66e8: {r: 56.15094, g: 16.463102, b: 0.587968, a: 1}

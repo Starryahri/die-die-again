@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Ice_Mat
+  m_Shader: {fileID: -6465566751694194690, guid: 3539a979f35ea1f4dbbec19ee72563a7, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_528b730e4f8b469796eef4eec5a33d0d:
+        m_Texture: {fileID: 2800000, guid: 1ad5f69e3244b94448e93ce1eec49d78, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_76271ab378964f69875540cf6439ff68:
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_d1648445ca3548e0ae3dbe1b323fe646:
+        m_Texture: {fileID: 2800000, guid: 0e654cd777472c647813968b42a739be, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: e3ba8bc476e919b4b9308f1d6abe660b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMapII:
+        m_Texture: {fileID: 2800000, guid: fbba011cc6fa1474294f6700f3e9ac41, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _snow:
+        m_Texture: {fileID: 2800000, guid: 50c397b0cfd8e7f4cb233370c8999495, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_1668a6e1a34e460a9af2ddcbe8231cba: 0.369
+    - Vector1_1a63f0270d914c5c8cfe3d6e2a21bc25: 0.51
+    - Vector1_1cebb562acb440389bc94812883879e4: 0.074
+    - Vector1_2f09bad437b44bc1b03af6cb1e972d11: 0.241
+    - Vector1_33badd742ffe4d2186045f3c121c90a0: 4
+    - Vector1_4c344ac0a89c4c1aa53664ce07c877db: 1.8
+    - Vector1_77864f6cefbf440682b1964a828cf858: -0.21
+    - Vector1_80e66dfc261a4137a358f1439e184e1e: 0.1
+    - Vector1_914e8329be8c4d629422d5a4c221c358: 1.4
+    - Vector1_d7d8fda5cdfd4bb9a02765b603160ab2: -0.26
+    - Vector1_f87e6d67f8ec4b868f06243f50e7aef4: 8
+    - _Cutoff: 0.5
+    - _Freezeeffectnormal: 4.77537
+    - _Gloss: 0.3252537
+    - _Ice_fresnel: 0.4528386
+    - _LocalGlobal: 0
+    - _Metallic: 0.6030321
+    - _Transparency: 0.490779
+    - _snow_slider: 7.350427
+    m_Colors:
+    - Color_610da19f08674e1cbc2fb823b29e7f2b: {r: 0.5542394, g: 1.442183, b: 1.9915042, a: 0}
+    - Color_7f4af57d9a824d1db0304c12438b66e8: {r: 224.6038, g: 65.85241, b: 2.351872, a: 1}
+    - Color_ba62c1283cef4d99b32d1bc9b2b6b489: {r: 0.27450982, g: 0.5294118, b: 0.4745098, a: 0}
+    - Color_d87d5d1fa7264f85bd2e3c573ce10e69: {r: 0.6163355, g: 2.1307597, b: 1.8842256, a: 0}
+    - Vector2_506bc9e479fa47cfa3d965fcd4dd3c65: {r: 2.96, g: 2, b: 0, a: 0}
+    - Vector2_611c06c9241d4ebc96797662c9fdc488: {r: 0, g: -0.2, b: 0, a: 0}
+    - Vector2_645d360bb82d452f9bb64bac4126a187: {r: 1, g: 1, b: 0, a: 0}
+    - Vector2_ed21f43f7b9e4302b4970c569c312342: {r: -0.1, g: -0.5, b: 0, a: 0}
+    - _Color: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  m_BuildTextureStacks: []
