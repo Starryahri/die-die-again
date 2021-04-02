@@ -140,12 +140,12 @@ MonoBehaviour:
   whatIsClimb:
     serializedVersion: 2
     m_Bits: 128
-  yVelocity: 20.5
-  xVelocity: 11.7
-  peakHeight: 11.97
-  xDistance: 13.18
-  customGravity: -57.916332
-  gravityMultiplier: 2.51
+  yVelocity: 18.9
+  xVelocity: 17.1
+  peakHeight: 9.1
+  xDistance: 16.53
+  customGravity: -7.76
+  gravityMultiplier: -0.9
   jumpTime: 0.19
   jumpTimeCounter: -0.053524315
   hangTime: 0.14

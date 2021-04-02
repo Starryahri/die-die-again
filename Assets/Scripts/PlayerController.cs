@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Recorder;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -75,9 +73,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        
         //Check if player is grounded, if they are able to jump, refer to MovementControls()
         _isGrounded = Physics.CheckSphere(groundCheck.position, checkRadius, whatIsGround);
-
         //rolled my own gravity feel, super customizable though!
         //This gravity is calculated based off position, not time;
         customGravity = (-2 * peakHeight * yVelocity * yVelocity) / (xDistance * xDistance);
@@ -95,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
     private void MovementControls()
     {
-        //Horiztonal movement
+        //Horizontal movement
         float moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector3(moveInput * xVelocity, rb.velocity.y, 0);
         //Debug.Log(moveInput);
@@ -178,6 +176,7 @@ public class PlayerController : MonoBehaviour
         //Jump movement
         if (Input.GetKeyDown(KeyCode.Space) && _hangCounter > 0f)
         {
+            Debug.Log("Jump");
             rb.velocity = new Vector3(rb.velocity.x, yVelocity, 0);
             anim.SetInteger("jump", 1);
             _isGrounded = false;
