@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Ice : MonoBehaviour
 {
-    public GameObject ice;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,18 +14,5 @@ public class Ice : MonoBehaviour
     void Update()
     {
         
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        //set onFire variable to true
-        Debug.Log("FREEZE!");
-        GameObject thing = Instantiate(ice, other.transform.position, Quaternion.identity);
-        thing.transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
-
-        //else do nothing;
-
-        //I need to make a corrountine to kill player after lit on fire probably 3 seconds. 
-        //Maybe I can make a function instead in here that will destroy anyobject on fire
     }
 }
