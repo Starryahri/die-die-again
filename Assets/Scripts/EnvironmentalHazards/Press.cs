@@ -42,7 +42,7 @@ public class Press : MonoBehaviour
             }
         }
 
-        if (transform.localPosition.y <= 1.7f && pistonExtend == false)  //retract back to start
+        if (transform.localPosition.y <= 2.7f && pistonExtend == false)  //retract back to start
         {
             if(transform.localPosition.y >= 2.7f)
             {

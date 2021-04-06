@@ -16,7 +16,7 @@ public class Spikes : MonoBehaviour
     void Update()
     {
         Vector3 originalpos = transform.position;
-        transform.position = Vector3.MoveTowards(transform.position, originalpos + new Vector3(0, -7f, 0), .025f);
+        //transform.position = Vector3.MoveTowards(transform.position, originalpos + new Vector3(0, -7f, 0), .025f);
     }
 
     public void OnTriggerEnter(Collider other)
@@ -37,7 +37,7 @@ public class Spikes : MonoBehaviour
                 other.GetComponent<Animator>().enabled = false;
             }
 
-            GameObject playerInstance = Instantiate(player, new Vector3(-16f, 2.63f, 0), Quaternion.identity);
+            GameObject playerInstance = Instantiate(player, new Vector3(-17f, -0.28f, -35), Quaternion.identity);
             playerInstance.tag = "Player";
             playerInstance.GetComponent<PlayerController>().enabled = true;
             playerInstance.GetComponent<Collider>().material.dynamicFriction = 0f;
