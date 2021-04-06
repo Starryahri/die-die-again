@@ -15,4 +15,23 @@ public class Button : MonoBehaviour
     {
         
     }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("On");
+            transform.localPosition = Vector3.up * 0.75f;
+        }
+
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Off");
+            transform.localPosition = Vector3.up * 1.25f;
+        }
+
+    }
 }

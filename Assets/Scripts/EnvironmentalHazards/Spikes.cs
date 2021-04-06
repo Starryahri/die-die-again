@@ -15,7 +15,8 @@ public class Spikes : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Vector3 originalpos = transform.position;
+        transform.position = Vector3.MoveTowards(transform.position, originalpos + new Vector3(0, -7f, 0), .025f);
     }
 
     public void OnTriggerEnter(Collider other)
