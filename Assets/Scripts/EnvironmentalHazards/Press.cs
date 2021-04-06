@@ -13,10 +13,12 @@ public class Press : MonoBehaviour
     public bool isExtended = false; //extended
 
     private Rigidbody rb;
+    private BoxCollider m_coll;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        m_coll = GetComponent<BoxCollider>();
         timeLeft = extendedTime;
     }
 
@@ -34,23 +36,24 @@ public class Press : MonoBehaviour
             
             if(timeLeft <= 0)
             {
-                //pistonExtend = false; //when time runs out, set the retract flag
-                pistonExtend = false;
-                isExtended = false;
+                pistonExtend = false; //when time runs out, set the retract flag
                 timeLeft = extendedTime;
-                //rb.MovePosition(transform.position + Vector3.up * Time.deltaTime * retractSpeed);
+
             }
         }
 
         if (transform.localPosition.y <= 2.7f && pistonExtend == false)  //retract back to start
         {
-            if(transform.localPosition.y >= 2.7f)
-            {
-                rb.MovePosition(transform.position + Vector3.zero * Time.deltaTime);
-            }
             Debug.Log("Retracting");
+
+            m_coll.enabled = false;
             rb.MovePosition(transform.position + Vector3.up * Time.deltaTime * retractSpeed);
             timeLeft = extendedTime;
+            if (transform.localPosition.y >= 2.6f)
+            {
+                isExtended = false;
+                m_coll.enabled = true;
+            }
             isExtended = false;
         }
     }
@@ -62,5 +65,6 @@ public class Press : MonoBehaviour
             pistonExtend = true;
             Debug.Log("Squish");    
         }
+
     }    
 }
