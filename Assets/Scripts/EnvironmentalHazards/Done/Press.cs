@@ -24,28 +24,22 @@ public class Press : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log(transform.localPosition.y);
         if(pistonExtend == true) //start extention
         {
             isExtended = true;
-            Debug.Log("Extending");
-
+            //Debug.Log("Extending");
             rb.MovePosition(transform.position + Vector3.down * Time.deltaTime * extendSpeed);
-            
             timeLeft = timeLeft-Time.deltaTime;
-            
             if(timeLeft <= 0)
             {
                 pistonExtend = false; //when time runs out, set the retract flag
                 timeLeft = extendedTime;
-
             }
         }
 
         if (transform.localPosition.y <= 2.7f && pistonExtend == false)  //retract back to start
         {
-            Debug.Log("Retracting");
-
+            //Debug.Log("Retracting");
             m_coll.enabled = false;
             rb.MovePosition(transform.position + Vector3.up * Time.deltaTime * retractSpeed);
             timeLeft = extendedTime;
@@ -63,7 +57,7 @@ public class Press : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && isExtended == false)
         {
             pistonExtend = true;
-            Debug.Log("Squish");    
+            //Debug.Log("Squish");    
         }
 
     }    

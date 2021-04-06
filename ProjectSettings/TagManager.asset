@@ -8,6 +8,7 @@ TagManager:
   - Climbable
   - Dead
   - Spikes
+  - IceCube
   layers:
   - Default
   - TransparentFX

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Firev2_Mat
+  m_Name: Firev2_mat
   m_Shader: {fileID: -6465566751694194690, guid: 198d1e3095b2cc547a683123f05bb078, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4

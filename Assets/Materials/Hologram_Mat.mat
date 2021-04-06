@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hologram_Mat
+  m_Name: Hologram_mat
   m_Shader: {fileID: -6465566751694194690, guid: 600e50f6c4e64445aa1dad0789252a4f, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 2

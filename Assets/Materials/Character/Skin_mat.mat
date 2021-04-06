@@ -7,20 +7,21 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Elec_Mat
-  m_Shader: {fileID: -6465566751694194690, guid: 2a18f102ab40b17498ddbb3a646f3211, type: 3}
+  m_Name: Skin_mat
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: ce4510c3f5b514620a9e7e297d418e34, type: 3}
+        m_Texture: {fileID: 2800000, guid: 45fd77e1ece77504aab9b79965b3aab7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -44,7 +45,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ce4510c3f5b514620a9e7e297d418e34, type: 3}
+        m_Texture: {fileID: 2800000, guid: 45fd77e1ece77504aab9b79965b3aab7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -76,10 +77,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_30e94b9e764d412e87e26f6191b94ead: 20
-    - Vector1_4bd2ab5a3be04c66b1fd14beb778d4cb: 2
-    - Vector1_66efd72f16974dae9ef99941702ee61e: 1.5
-    - Vector1_a59f7409b5af4f45a9ebb00fe9375a9b: 2.13
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -94,7 +91,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Metallic: 0.59
+    - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
@@ -107,15 +104,12 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_3c3e35d64c934bea990479a302900c79: {r: 3.2627451, g: 38.4, b: 47.937256, a: 1}
-    - Vector2_0112f02d06da4c7f90090fa967b943a9: {r: 0, g: 2.24, b: 0, a: 0}
-    - Vector2_61939ad64f22409b8d621656900df33c: {r: 0.1, g: 1.25, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &4094161253601379999
+--- !u!114 &343485700921745704
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
