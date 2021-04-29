@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8767873888666209384}
   m_Layer: 6
   m_Name: Button
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,6 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcee73cbdf11fb24e936dabf4cb7065f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 5083116202213219750, guid: 63e81a7b65b1ad54a81c66e58a86d69c, type: 3}
+  door: {fileID: 6247975359129703951, guid: db372f927ffc7e04791d59b10a56849d, type: 3}
 --- !u!1 &5795866986996823689
 GameObject:
   m_ObjectHideFlags: 0

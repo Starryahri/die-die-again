@@ -9,6 +9,11 @@ TagManager:
   - Dead
   - Spikes
   - IceCube
+  - Fire
+  - Button
+  - spikechange
+  - onfire
+  - firechange
   layers:
   - Default
   - TransparentFX

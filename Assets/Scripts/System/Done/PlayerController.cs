@@ -9,6 +9,10 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;
     public GameObject playerObj;
     public GameObject blood;
+    public GameObject fire;
+
+    public GameObject playerModel;
+    public GameManager gM;
 
     CharacterController controller;
     Animator anim;
@@ -34,13 +38,16 @@ public class PlayerController : MonoBehaviour
     public float hangTime = 0.2f;
     private float _hangCounter;
 
+    //Spawn Point
+    public Vector3 spawnPoint;
     //Other checks
     [SerializeField]
-    private bool _isGrounded;
+    private bool _isGrounded = true;
     private bool _isJumping;
 
     private bool facingRight = false;
     public bool isPlayerDead = false;
+    public bool isOnFire = false;
 
 
     public bool _isTouchingFront;
@@ -57,6 +64,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+        spawnPoint = new Vector3(-21.31f, 0.27f, -35);
         //note I might start start caching some variables, less memory intensive I think?
         //Todo Time Reverse and Stop/Pausing, slow down
         //Todo Start Research on pausing
@@ -73,7 +81,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        
+        Debug.Log(_isGrounded);
+        //Debug.Log(spawnPoint);
         //Check if player is grounded, if they are able to jump, refer to MovementControls()
         _isGrounded = Physics.CheckSphere(groundCheck.position, checkRadius, whatIsGround);
         //rolled my own gravity feel, super customizable though!
@@ -88,6 +97,10 @@ public class PlayerController : MonoBehaviour
 
         MovementControls();
 
+        if (isOnFire == true)
+        {
+            //StartCoroutine(DelayFifteen());
+        }
 
     }
 
@@ -230,9 +243,74 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Spikes"))
+        if (other.gameObject.CompareTag("Spikes") || other.gameObject.CompareTag("spikechange"))
         {
             Instantiate(blood, transform.position, Quaternion.identity);
         }
+
+        if (other.gameObject.CompareTag("Fire") && !gameObject.CompareTag("Dead"))
+        {
+            
+            gameObject.tag = "Dead";
+            GameObject thing = Instantiate(fire, transform.position + new Vector3(0f, 1.134f, -0.141f), Quaternion.identity);
+            GameObject thing2 = Instantiate(fire, transform.position + new Vector3(0f, 0.401f, 0.131f), Quaternion.identity);
+            thing.transform.parent = transform;     
+            thing2.transform.parent = transform;
+            StartCoroutine(DelayFifteen());
+            //gameObject.GetComponent<PlayerController>().enabled = false;a
+            //gameObject.GetComponent<Rigidbody>().useGravity = true;
+            //gameObject.GetComponent<Collider>().material.dynamicFriction = 10f;
+            //gameObject.GetComponent<Collider>().material.staticFriction = 10f;
+            //gameObject.GetComponent<Animator>().enabled = false;
+        }
+
+        if (other.gameObject.CompareTag("firechange") && !gameObject.CompareTag("Dead"))
+        {
+            gameObject.tag = "Dead";
+            GameObject thing = Instantiate(fire, transform.position, Quaternion.identity);
+            thing.transform.parent = transform; 
+            spawnPoint = new Vector3(-20.33f, 5.8f, -35f);
+            StartCoroutine(DelayFifteen());
+        }
+        if (other.gameObject.CompareTag("Button"))
+        {
+            spawnPoint = new Vector3(-8.29f, 0.27f, -35f);
+        }
+
+        if (other.gameObject.CompareTag("spikechange"))
+        {
+            anim.SetInteger("crushed", 1);
+            spawnPoint = new Vector3(0, 0.38f, -35f);
+        }
     }
+
+    public void SetFireState()
+    {
+        isOnFire = true;
+    }
+
+    public IEnumerator DelayFifteen()
+    {
+        yield return new WaitForSeconds(5f);
+
+        isOnFire = false;
+        Debug.Log("Burnt to a crisp, GONE");
+        anim.SetInteger("crushed", 1);
+        //play death animation
+        gameObject.GetComponent<PlayerController>().enabled = true;
+        gameObject.GetComponent<Rigidbody>().useGravity = false;
+        gameObject.GetComponent<Animator>().enabled = true;
+        gameObject.transform.eulerAngles = new Vector3(0, 0, -90);
+        //GameObject playerInstance = Instantiate(playerObj, new Vector3(-17f, -0.28f, -35), Quaternion.identity);
+        GameObject playerInstance = Instantiate(playerModel, spawnPoint, Quaternion.identity);
+
+        Destroy(playerInstance.transform.Find("vfx_firev2(Clone)").gameObject);
+
+        //Destroy(playerInstance.transform.GetChild(3).gameObject);
+        playerInstance.tag = "Player";
+        gameObject.GetComponent<PlayerController>().enabled = false;
+        gameObject.GetComponent<Rigidbody>().useGravity = true;
+        gameObject.GetComponent<Animator>().enabled = false;
+        //Destroy(this.gameObject);
+    } 
 }

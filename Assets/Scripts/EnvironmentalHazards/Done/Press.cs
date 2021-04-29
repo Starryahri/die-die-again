@@ -60,5 +60,10 @@ public class Press : MonoBehaviour
             //Debug.Log("Squish");    
         }
 
+        if (other.gameObject.CompareTag("Dead"))
+        {
+            pistonExtend = false;
+        }
+
     }    
 }

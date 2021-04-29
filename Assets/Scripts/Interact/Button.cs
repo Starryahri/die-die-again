@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Button : MonoBehaviour
 {
+    public PlayerController player;
     // Start is called before the first frame update
+    public Transform door;
     void Start()
     {
-        
+        //door = transform.Find("Door");
     }
 
     // Update is called once per frame
@@ -18,16 +20,18 @@ public class Button : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player"))
+        if(other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Dead"))
         {
             Debug.Log("On");
             transform.localPosition = Vector3.up * 0.75f;
+            //other.GetComponent.spawnPoint = new Vector3(-8.29f, 0.27f, -35f);
+            door.transform.Translate(new Vector3(-10.5945f, -4f, -29.41f));
         }
 
     }
     public void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.CompareTag("Player"))
+        if(other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Dead"))
         {
             Debug.Log("Off");
             transform.localPosition = Vector3.up * 1.25f;
