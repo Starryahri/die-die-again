@@ -10,10 +10,9 @@ public class PlayerController : MonoBehaviour
     public GameObject playerObj;
     public GameObject blood;
     public GameObject fire;
-
     public GameObject playerModel;
     public GameManager gM;
-
+    public AudioSource audiosrc;
     CharacterController controller;
     Animator anim;
 
@@ -64,6 +63,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+        audiosrc = GetComponent<AudioSource>();
         spawnPoint = new Vector3(-21.31f, 0.27f, -35);
         //note I might start start caching some variables, less memory intensive I think?
         //Todo Time Reverse and Stop/Pausing, slow down
@@ -110,22 +110,25 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector3(moveInput * xVelocity, rb.velocity.y, 0);
         //Debug.Log(moveInput);
 
-        if (moveInput < 0)
+        if (moveInput < 0  && gameObject.tag == "Player")
         {
             transform.eulerAngles = new Vector3(0, 180, 0); // flipped
             //Flip();
             anim.SetInteger("condition", 1);
+            audiosrc.Play();
         }
-        else if (moveInput > 0)
+        else if (moveInput > 0 && gameObject.tag == "Player")
         {
             transform.eulerAngles = new Vector3(0, 0, 0); // normal
                                                           //Flip();
             anim.SetInteger("condition", 1);
+            audiosrc.Play();
         }
 
         if (moveInput == 0)
         {
             anim.SetInteger("condition", 0);
+            audiosrc.Stop();
         }
 
         if (_isGrounded)
@@ -252,9 +255,11 @@ public class PlayerController : MonoBehaviour
             
             gameObject.tag = "Dead";
             GameObject thing = Instantiate(fire, transform.position + new Vector3(0f, 1.134f, -0.141f), Quaternion.identity);
+            thing.transform.parent = transform;
             GameObject thing2 = Instantiate(fire, transform.position + new Vector3(0f, 0.401f, 0.131f), Quaternion.identity);
-            thing.transform.parent = transform;     
+            thing2.name = "vfx_firev2-2";     
             thing2.transform.parent = transform;
+            
             StartCoroutine(DelayFifteen());
             //gameObject.GetComponent<PlayerController>().enabled = false;a
             //gameObject.GetComponent<Rigidbody>().useGravity = true;
@@ -268,9 +273,14 @@ public class PlayerController : MonoBehaviour
             gameObject.tag = "Dead";
             GameObject thing = Instantiate(fire, transform.position, Quaternion.identity);
             thing.transform.parent = transform; 
+             GameObject thing2 = Instantiate(fire, transform.position + new Vector3(0f, 0.401f, 0.131f), Quaternion.identity);
+            thing2.name = "vfx_firev2-2";     
+            thing2.transform.parent = transform;
+            
             spawnPoint = new Vector3(-20.33f, 5.8f, -35f);
             StartCoroutine(DelayFifteen());
         }
+
         if (other.gameObject.CompareTag("Button"))
         {
             spawnPoint = new Vector3(-8.29f, 0.27f, -35f);
@@ -290,8 +300,9 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator DelayFifteen()
     {
+        isOnFire = true;
         yield return new WaitForSeconds(5f);
-
+        
         isOnFire = false;
         Debug.Log("Burnt to a crisp, GONE");
         anim.SetInteger("crushed", 1);
@@ -302,9 +313,9 @@ public class PlayerController : MonoBehaviour
         gameObject.transform.eulerAngles = new Vector3(0, 0, -90);
         //GameObject playerInstance = Instantiate(playerObj, new Vector3(-17f, -0.28f, -35), Quaternion.identity);
         GameObject playerInstance = Instantiate(playerModel, spawnPoint, Quaternion.identity);
-
+        playerInstance.tag = "Player";
         Destroy(playerInstance.transform.Find("vfx_firev2(Clone)").gameObject);
-
+        Destroy(playerInstance.transform.Find("vfx_firev2-2").gameObject);
         //Destroy(playerInstance.transform.GetChild(3).gameObject);
         playerInstance.tag = "Player";
         gameObject.GetComponent<PlayerController>().enabled = false;

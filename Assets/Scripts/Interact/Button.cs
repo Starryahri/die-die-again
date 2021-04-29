@@ -25,7 +25,7 @@ public class Button : MonoBehaviour
             Debug.Log("On");
             transform.localPosition = Vector3.up * 0.75f;
             //other.GetComponent.spawnPoint = new Vector3(-8.29f, 0.27f, -35f);
-            door.transform.Translate(new Vector3(-10.5945f, -4f, -29.41f));
+            door.transform.Translate(new Vector3(-11.76f, 19.93f, -73.65f));
         }
 
     }

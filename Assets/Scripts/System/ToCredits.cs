@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ToCredits : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
-        //go to credits scene
+        Debug.Log("On");
+        SceneManager.LoadScene(3);
     }
 }
