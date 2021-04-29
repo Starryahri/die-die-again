@@ -81,8 +81,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(_isGrounded);
-        //Debug.Log(spawnPoint);
+
         //Check if player is grounded, if they are able to jump, refer to MovementControls()
         _isGrounded = Physics.CheckSphere(groundCheck.position, checkRadius, whatIsGround);
         //rolled my own gravity feel, super customizable though!

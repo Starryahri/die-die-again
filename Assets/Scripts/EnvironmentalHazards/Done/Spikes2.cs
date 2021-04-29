@@ -43,6 +43,7 @@ public class Spikes2 : MonoBehaviour
             playerInstance.GetComponent<Collider>().material.dynamicFriction = 0f;
             playerInstance.GetComponent<Collider>().material.staticFriction = 0f;
             playerInstance.GetComponent<Rigidbody>().useGravity = false;
+            playerInstance.GetComponent<Animator>().enabled = false;
             //playerInstance.name = "Player";
             Destroy(other.gameObject, 15f);
 
